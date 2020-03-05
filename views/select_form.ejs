@@ -1,0 +1,5 @@
+<select name="databases" id="selectDatabases">
+    <% databases.forEach( (item) => { %>
+        <option value=<%- "'" + item + "'" %>> <%= item %></option>
+    <% }) %>
+</select>
