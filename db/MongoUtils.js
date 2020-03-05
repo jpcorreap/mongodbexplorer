@@ -7,7 +7,7 @@ function MongoUtils() {
 
   mu.connect = () => {
     const client = new MongoClient(
-      "mongodb+srv://vaca:vaca123@cluster0-3lhwp.mongodb.net/test?retryWrites=true&w=majority",
+      "mongodb+srv://vaca:<password>@cluster0-3lhwp.mongodb.net/test?retryWrites=true&w=majority",
       {
         useUnifiedTopology: true
       }
