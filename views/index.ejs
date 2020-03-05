@@ -20,9 +20,9 @@
   <body>
     <h1><%= title %></h1>
    
-    <select name="databases" id="selectDatabases">
+    <select name="databases" id="databaseSelection">
       <% list.forEach( (item) => { %>
-          <option value=<%= item.name %>> <%= item.name %></option>
+          <option onclick="showCollections()" value=<%= item.name %>> <%= item.name %></option>
       <% }) %>
       <!-- Object.keys()  -->
   </select>
