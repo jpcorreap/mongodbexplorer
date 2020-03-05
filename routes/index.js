@@ -5,11 +5,13 @@ const mu = require("../db/MongoUtils.js");
 
 /* GET home page. */
 router.get("/", function(req, res) {
-  mu.databases.list().then(databases =>
+  mu.databases.list().then(dbs => {
+    console.log("Llegaron los documentos ", dbs, typeof dbs);
     res.render("index", {
-      databases
-    })
-  );
+      title: "MongoDB Explorer",
+      list: dbs.databases
+    });
+  });
 });
 
 module.exports = router;

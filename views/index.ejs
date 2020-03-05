@@ -21,14 +21,14 @@
     <h1><%= title %></h1>
    
     <select name="databases" id="selectDatabases">
-      <% databases.forEach( (item) => { %>
-          <option value=<%- "'" + item + "'" %>> <%= item %></option>
+      <% list.forEach( (item) => { %>
+          <option value=<%= item.name %>> <%= item.name %></option>
       <% }) %>
-      
+      <!-- Object.keys()  -->
   </select>
 
-  <script src="./scripts/fetch.js"></script>
-  <script src="./scripts/main.js"></script>
+  <script src="./javascripts/fetch.js"></script>
+  <script src="./javascripts/main.js"></script>
   
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
