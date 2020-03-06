@@ -17,7 +17,7 @@ router.get("/", function(req, res) {
 // Data endpoints
 
 /* GET collections of a specific database. */
-router.get("/set/:dbName", function(req, res) {
+router.get("/database/:dbName", function(req, res) {
   mu.collections.list(req.params.dbName).then(col => {
     console.log("Llegaron las colecciones ", col);
     res.render("db_selected", {
@@ -25,6 +25,19 @@ router.get("/set/:dbName", function(req, res) {
       dbName: req.params.dbName,
       collections: col
     });
+  });
+});
+
+/* GET registers of a specific collection of a specific database. */
+router.get("/database/:dbName/collection/:colName", function(req, res) {
+  mu.collections.findLast20(req.params.dbName, req.params.colName).then(col => {
+    console.log("GET COL OBJECTS: Llegaron las colecciones ", col);
+    res.redirect("/");
+    /*res.render("display_records", {
+      title: "MongoDB Explorer",
+      dbName: req.params.dbName,
+      collections: col
+    });*/
   });
 });
 

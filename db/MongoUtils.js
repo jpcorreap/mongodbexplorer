@@ -3,27 +3,16 @@ const MongoClient = require("mongodb").MongoClient;
 //const ObjectID = require("mongodb").ObjectID;
 const client = new MongoClient("", { useUnifiedTopology: true });
 
-// Connect
 function MongoUtils() {
   const mu = {};
 
+  // ----------------------
+  // Databases operations
+  // ----------------------
+
   mu.databases = {};
 
-  mu.collections = {};
-
-  // Trae todos los elementos de una colección
-  mu.collections.find = query =>
-    client
-      .connect()
-      .then(client => {
-        return client
-          .db("computadores")
-          .collection("salaWuaira")
-          .find(query)
-          .toArray();
-      })
-      .finally(() => client.close());
-
+  // Get databases of MongoDB connection
   mu.databases.list = () =>
     client
       .connect()
@@ -35,16 +24,47 @@ function MongoUtils() {
       )
       .finally(client.close());
 
-  // Trae todas las colecciones de una base de datos dada
+  // Get statistics of specific database
+  mu.databases.info = dbName =>
+    client
+      .connect()
+      .then(client =>
+        client.db(dbName).runCommand({
+          dbStats: 1
+        })
+      )
+      .finally(client.close());
+
+  // ----------------------
+  // Collections operations
+  // ----------------------
+
+  mu.collections = {};
+
+  // Get collections of a certain database
   mu.collections.list = dbName =>
     client
       .connect()
-      .then(
-        client =>
-          client
-            .db(dbName)
-            .listCollections()
-            .toArray() // Returns a promise that will resolve to the list of the collections
+      .then(client =>
+        client
+          .db(dbName)
+          .listCollections()
+          .toArray()
+      )
+      .finally(client.close());
+
+  // Get 20 last documents of an specific collection's database
+  mu.collections.findLast20 = (dbName, colName) =>
+    client
+      .connect()
+      .then(client =>
+        client
+          .db(dbName)
+          .collection(colName)
+          .find({})
+          .limit(20)
+          .sort({ _id: -1 })
+          .toArray()
       )
       .finally(client.close());
 
