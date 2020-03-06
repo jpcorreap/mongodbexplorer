@@ -1,0 +1,15 @@
+<%- include("./head") %>
+
+<h1>You have selected <%= dbName %>!</h1>
+<h5>There you are <%=dbName%>&#39;s collections:</h5>
+
+<select name="collections" id="collectionSelection">
+  <% collections.forEach( (item) => { %>
+      <option onclick="showRecords()" value=<%= item.name %>> <%= item.name %></option>
+  <% }) %>
+  <!-- Object.keys()  -->
+</select>
+
+<script src="./javascripts/fetch.js"></script>
+
+<%- include("./closure") %>

@@ -11,6 +11,7 @@ function MongoUtils() {
 
   mu.collections = {};
 
+  // Trae todos los elementos de una colección
   mu.collections.find = query =>
     client
       .connect()
@@ -33,9 +34,11 @@ function MongoUtils() {
           .listDatabases()
       )
       .finally(client.close());
-  /*
-  mu.collections.list = dbName => {
-    mu.connect()
+
+  // Trae todas las colecciones de una base de datos dada
+  mu.collections.list = dbName =>
+    client
+      .connect()
       .then(
         client =>
           client
@@ -43,10 +46,8 @@ function MongoUtils() {
             .listCollections()
             .toArray() // Returns a promise that will resolve to the list of the collections
       )
-      .then(cols => console.log("Collections", cols))
-      .finally(() => mu.close());
-  };
-*/
+      .finally(client.close());
+
   return mu;
 }
 

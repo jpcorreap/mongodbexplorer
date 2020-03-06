@@ -9,7 +9,21 @@ router.get("/", function(req, res) {
     console.log("Llegaron los documentos ", dbs, typeof dbs);
     res.render("index", {
       title: "MongoDB Explorer",
-      list: dbs.databases
+      databases: dbs.databases
+    });
+  });
+});
+
+// Data endpoints
+
+/* GET collections of a specific database. */
+router.get("/set/:dbName", function(req, res) {
+  mu.collections.list(req.params.dbName).then(col => {
+    console.log("Llegaron las colecciones ", col);
+    res.render("db_selected", {
+      title: "MongoDB Explorer",
+      dbName: req.params.dbName,
+      collections: col
     });
   });
 });

@@ -1,6 +1,6 @@
 function showCollections() {
-  const dbName = $("#databaseSelection").val();
+  const dbName = document.getElementById("databaseSelection").value;
   console.log("Seleccionó la base de datos " + "'" + dbName + "'");
 
-  window.location.replace("http://www.google.com/" + dbName);
+  window.location.replace("/set/" + dbName);
 }
