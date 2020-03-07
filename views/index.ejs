@@ -3,7 +3,7 @@
 <div class="container">
   <h1 style="margin: 15px"><strong><%= title %></strong></h1>
 
-  <p>Please, select a database to continue:</p>
+  <p>Welcome! Please click on a database to continue:</p>
   <select name="databases" id="databaseSelection">
   <% databases.forEach( (item) => { %>
     <option onclick="showCollections()" value=<%= item.name %>> <%= item.name %></option>
