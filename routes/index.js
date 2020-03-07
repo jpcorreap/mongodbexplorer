@@ -48,6 +48,14 @@ router.get("/database/:dbName/collection/:colName/records", function(req, res) {
   });
 });
 
+router.post("/database/:dbName/collection/:colName/insert/", function(
+  req,
+  res
+) {
+  console.log("Va a insertar a la base de datos el query ", req);
+  mu.collections.insert(req.body.query).then(res.redirect("../"));
+});
+
 // For debbuging pourposes
 router.get("/testinfo/:dbName/:colName", function(req, res) {
   mu.collections.info(req.params.dbName, req.params.colName).then(col => {
