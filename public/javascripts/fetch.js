@@ -1,32 +1,56 @@
 // Code taken from https://github.com/jpcorreap/smartscheduler/blob/master/public/scripts/fetch.js
 const thead = document.getElementById("recordsTableHead");
 const tbody = document.getElementById("recordsTableBody");
+const form = document.getElementById("insertForm");
+const colName = document.getElementById("colNameMachete").innerHTML;
+let keys = {};
 
-function cleanTBody() {
-  let child = tbody.lastElementChild;
-  while (child) {
-    tbody.removeChild(child);
-    child = tbody.lastElementChild;
+const renderForm = () => {
+  for (let i = 1; i < keys.length; i++) {
+    let key = keys[i];
+
+    let div1 = document.createElement("div");
+    div1.setAttribute("class", "form-group");
+
+    let div2 = document.createElement("div");
+    div2.setAttribute("class", "row");
+
+    let label = document.createElement("label");
+    label.setAttribute("class", "col");
+    label.textContent = key + ":";
+
+    let input = document.createElement("input");
+    input.setAttribute("id", key);
+    input.setAttribute("class", "form-control col");
+    input.setAttribute("type", "text");
+    input.setAttribute("name", key);
+    input.setAttribute("placeholder", "Enter " + key);
+
+    div2.appendChild(label);
+    div2.appendChild(input);
+    div1.appendChild(div2);
+    form.appendChild(div1);
   }
-}
 
-function cleanTHead() {
-  let child = thead.lastElementChild;
-  while (child) {
-    thead.removeChild(child);
-    child = thead.lastElementChild;
-  }
-}
+  let btn = document.createElement("button");
+  btn.setAttribute("onclick", "submitInformation()");
+  btn.setAttribute("class", "btn btn-primary");
+  btn.textContent = "Insert into " + colName + " collection.";
 
+  form.appendChild(btn);
+};
+
+/**
+ * Displays data in a table
+ * @param {Less than 20 records taken from selected collection} records
+ */
 const render = records => {
-  cleanTBody();
-
   if (!(Array.isArray(records) && records.length))
     // Condition taked from https://www.geeksforgeeks.org/check-if-an-array-is-empty-or-not-in-javascript/
     console.log("Colección vacía");
   else {
     // Stores all keys of first record. It will be so usefull
-    const keys = Object.keys(records[0]);
+    keys = Object.keys(records[0]);
 
     // Creates header's tr
     let tr = document.createElement("tr");
@@ -40,7 +64,6 @@ const render = records => {
 
     // Creates a table row for each register
     records.forEach(register => {
-      console.log(register, typeof register);
       let tr = document.createElement("tr");
 
       // Iterates over record's values
@@ -52,15 +75,42 @@ const render = records => {
 
       tbody.appendChild(tr);
     });
+
+    renderForm();
   }
   document.getElementById("records").style.visibility = "visible";
-
-  console.log("Lo que llegó aquí fue ", records);
 };
 
+const submitInformation = () => {
+  let obj = {};
+
+  for (let i = 1; i < keys.length; i++) {
+    let key = keys[i];
+    obj[key] = document.getElementById(key).value;
+    //console.log("Got value ", key, obj[key]);
+  }
+
+  let text = JSON.stringify(obj);
+  console.log(text);
+  text = text.replace('"[', "[");
+  text = text.replace(']"', "]");
+
+  console.log("Se va a mandar el query ", text);
+
+  fetch(colName + "/insert", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: text
+  });
+};
+
+/**
+ * Kind of main function
+ * It executes client render for table and form
+ */
 function viewRecords() {
-  let colName = document.getElementById("colNameMachete").innerHTML;
-  console.log("Entró, entró, entró a viewRecords de index.js");
   fetch(colName + "/records")
     .then(req => req.json())
     .then(data => render(data));

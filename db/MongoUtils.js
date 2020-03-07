@@ -68,6 +68,16 @@ function MongoUtils() {
         .toArray()
         .finally(() => client.close())
     );
+
+  // Get 20 last documents of an specific collection's database
+  mu.collections.insert = (dbName, colName, query) =>
+    mu.connect().then(client =>
+      client
+        .db(dbName)
+        .collection(colName)
+        .insertOne(query)
+        .finally(() => client.close())
+    );
   // https://docs.mongodb.com/manual/reference/method/db.collection.count/
   // https://docs.mongodb.com/manual/reference/method/db.collection.storageSize/
   return mu;

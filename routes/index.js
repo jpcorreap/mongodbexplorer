@@ -48,12 +48,17 @@ router.get("/database/:dbName/collection/:colName/records", function(req, res) {
   });
 });
 
-router.post("/database/:dbName/collection/:colName/insert/", function(
-  req,
-  res
-) {
-  console.log("Va a insertar a la base de datos el query ", req);
-  mu.collections.insert(req.body.query).then(res.redirect("../"));
+router.post("/database/:dbName/collection/:colName/insert", function(req, res) {
+  console.log("\n-------------------\nSE PRENDIÓ");
+  console.log("Va a insertar a la base de datos el query ", req.body);
+  mu.collections.insert(req.params.dbName, req.params.colName, req.body).then(
+    res.render("success", {
+      title: "MongoDB Explorer",
+      dbName: req.params.dbName,
+      colName: req.params.colName,
+      record: req.body
+    })
+  );
 });
 
 // For debbuging pourposes
