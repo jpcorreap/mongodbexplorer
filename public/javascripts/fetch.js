@@ -38,6 +38,7 @@ const renderForm = () => {
   btn.textContent = "Insert into " + colName + " collection.";
 
   form.appendChild(btn);
+  document.getElementById("card").style.visibility = "visible";
 };
 
 /**

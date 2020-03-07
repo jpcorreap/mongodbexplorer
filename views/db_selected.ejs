@@ -1,18 +1,20 @@
 <%- include("./head") %>
 
-<h6>Database <%= dbName %>.</h6>
-<h6>Database size: <%= extraInfo.sizeOnDisk %> Bytes.</h2>
-<h6>Is empty?: <%= extraInfo.empty %>.</h2>
+<div class="container" style="margin-top: 15px;">
+  <h1 style="margin: 15px"><strong>Database selected.</strong></h1>
 
-<h6>Now, please select one of <%=dbName%>&#39;s collections:</h5>
-
-<select name="collections" id="collectionSelection">
-  <% collections.forEach( (item) => { %>
+  <ul>
+    <li><strong>Name:</strong> <%= dbName %></li>
+    <li><strong>Size:</strong> <%= extraInfo.sizeOnDisk %> Bytes</li>
+    <li><strong>Is empty?:</strong> <%= extraInfo.empty %></li>
+  </ul>
+  <h6>Now, please select one of <%=dbName%>&#39;s collections:</h5>
+  <select name="collections" id="collectionSelection">
+    <% collections.forEach( (item) => { %>
       <option onclick="showRecords()" value=<%= item.name %>> <%= item.name %></option>
-  <% }) %>
-  <!-- Object.keys()  -->
-</select>
-
+    <% }) %>
+  </select>
+</div>
 <script src="/javascripts/main.js"></script>
 
 <%- include("./closure") %>

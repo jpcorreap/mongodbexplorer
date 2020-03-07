@@ -29,8 +29,7 @@ router.post("/", function(req, res) {
 // Data endpoints
 router.get("/setup", function(req, res) {
   res.render("setup", {
-    title: "MongoDB Explorer",
-    mensaje: "Please provide an URL to connect."
+    title: "MongoDB Explorer"
   });
 });
 

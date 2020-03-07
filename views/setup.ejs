@@ -1,11 +1,12 @@
 <%- include("./head") %>
 
-<h5><%=mensaje%></h5>
-<h3>In order to use the app, please provide an URL:</h3>
+<div class="container" style="margin-top: 50px;">
+  <h3>Please provide a MongoDB URL connection:</h3>
 
-<form action="/" method="POST">
-  <input type="url" name="url" value="url" />
-  <button class="button btn-primary" type="submit">Submit</button>
-</form>
+  <form action="/" method="POST">
+    <input type="url" name="url" value="url" />
+    <button class="button btn-primary" type="submit">Submit</button>
+  </form>
+</div>
 
 <%- include("./closure") %>

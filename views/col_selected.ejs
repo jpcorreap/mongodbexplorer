@@ -2,9 +2,15 @@
 
 <p id="colNameMachete" style="visibility: hidden;"><%=colName%></p>
 
-<h4>Database: <%=dbName%></h4>
-<h4>Collection: <%=colName%></h4>
-<h4>Here you are latest 20 records:</h4>
+<div class="container">
+  <h1 style="margin: 15px"><strong>Database selected.</strong></h1>
+  <ul>
+    <li><strong>Database:</strong> <%= dbName %></li>
+    <li><strong>Collection:</strong> <%=colName%></li>
+    <li>Here you are <strong>latest 20 records</strong> in <%=colName%>:</li>
+  </ul>
+</div>
+
 <div class="container">
   <table class="table table-bordered" id="records" style="visibility: hidden;">
     <thead
@@ -17,7 +23,8 @@
 
   <div
     class="card col-10"
-    style="width: max-content; margin: 0 auto; float: none; margin-top: 60px;"
+    style="width: max-content; margin: 0 auto; float: none; margin-top: 60px; visibility: hidden;"
+    id="card"
   >
     <div class="card-body">
       <h4 class="card-title">
