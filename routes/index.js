@@ -54,12 +54,11 @@ router.get("/database/:dbName/collection/:colName", function(req, res) {
   if (mu.url === "") res.redirect("/setup");
   else {
     mu.collections.info(req.params.dbName, req.params.colName).then(col => {
-      console.log("GET COL OBJECTS: Llegaron las colecciones ", col);
       res.render("col_selected", {
         title: "MongoDB Explorer",
         dbName: req.params.dbName,
         colName: req.params.colName,
-        info: col
+        size: col.size
       });
     });
   }
@@ -71,10 +70,7 @@ router.get("/database/:dbName/collection/:colName/records", function(req, res) {
     mu.collections
       .findLast20(req.params.dbName, req.params.colName)
       .then(col => {
-        console.log(
-          "\n-----------\nIMPORTANTE\nLlegaron las colecciones ",
-          col
-        );
+        console.log("\n-----------\nCollections arrived: ", col);
         res.json(col);
       });
   }
@@ -83,7 +79,7 @@ router.get("/database/:dbName/collection/:colName/records", function(req, res) {
 router.post("/database/:dbName/collection/:colName/insert", function(req, res) {
   if (mu.url === "") res.redirect("/setup");
   else {
-    console.log("\n-------------------\nSE PRENDIÓ");
+    console.log("\n-------------------\nBrought");
     console.log("Va a insertar a la base de datos el query ", req.body);
     mu.collections
       .insert(req.params.dbName, req.params.colName, req.body)
@@ -91,25 +87,9 @@ router.post("/database/:dbName/collection/:colName/insert", function(req, res) {
   }
 });
 
-// For debbuging pourposes
-router.get("/testinfo/:dbName/:colName", function(req, res) {
-  mu.collections.info(req.params.dbName, req.params.colName).then(col => {
-    console.log("Llegaron las colecciones ", col);
-    res.send(col);
-  });
-});
-
-// Auxiliar method
+// Auxiliar method. Returns info of a certain database
 const getInfo = dbName => {
-  for (const db of databasesInfo) {
-    console.log(
-      "\n-------------------------\nCOMPARA ",
-      db.name,
-      " CON ",
-      dbName
-    );
-    if (db.name === dbName) return db;
-  }
+  for (const db of databasesInfo) if (db.name === dbName) return db;
 };
 
 module.exports = router;
