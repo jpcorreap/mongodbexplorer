@@ -81,6 +81,11 @@ const render = records => {
   document.getElementById("records").style.visibility = "visible";
 };
 
+// Function taked from https://docs.mongodb.com/manual/reference/method/db.collection.count
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const submitInformation = () => {
   let obj = {};
 
@@ -104,6 +109,9 @@ const submitInformation = () => {
     },
     body: text
   });
+
+  // Sleeps two seconds to update table
+  sleep(2000).then(() => window.location.replace(colName));
 };
 
 /**
