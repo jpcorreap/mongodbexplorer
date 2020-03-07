@@ -1,14 +1,13 @@
 // Code taken from https://stackoverflow.com/questions/16571021/how-to-list-all-mongodb-databases-in-node-js/60546171#60546171
 const MongoClient = require("mongodb").MongoClient;
 
-const url = "";
-
 function MongoUtils() {
   const mu = {};
+  mu.url = "";
 
   // Connection to database
   mu.connect = () => {
-    const client = new MongoClient(url, {
+    const client = new MongoClient(mu.url, {
       useUnifiedTopology: true
     });
     return client.connect();
@@ -78,8 +77,7 @@ function MongoUtils() {
         .insertOne(query)
         .finally(() => client.close())
     );
-  // https://docs.mongodb.com/manual/reference/method/db.collection.count/
-  // https://docs.mongodb.com/manual/reference/method/db.collection.storageSize/
+
   return mu;
 }
 

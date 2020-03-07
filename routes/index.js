@@ -5,16 +5,32 @@ const mu = require("../db/MongoUtils.js");
 
 /* GET home page. */
 router.get("/", function(req, res) {
-  mu.databases.list().then(dbs => {
-    console.log("Llegaron los documentos ", dbs, typeof dbs);
-    res.render("index", {
-      title: "MongoDB Explorer",
-      databases: dbs.databases
+  if (mu.url === "") res.redirect("/setup");
+  else {
+    mu.databases.list().then(dbs => {
+      console.log("Llegaron los documentos ", dbs, typeof dbs);
+      res.render("index", {
+        title: "MongoDB Explorer",
+        databases: dbs.databases
+      });
     });
-  });
+  }
+});
+
+router.post("/", function(req, res) {
+  console.log("\n-------------------\nSE PRENDIÓ");
+  console.log("Llegó la URL ", req.body);
+  mu.url = req.body.url;
+  res.redirect("/");
 });
 
 // Data endpoints
+router.get("/setup", function(req, res) {
+  res.render("setup", {
+    title: "MongoDB Explorer",
+    mensaje: "Please provide an URL to connect."
+  });
+});
 
 /* GET collections of a specific database. */
 router.get("/database/:dbName", function(req, res) {
@@ -51,14 +67,9 @@ router.get("/database/:dbName/collection/:colName/records", function(req, res) {
 router.post("/database/:dbName/collection/:colName/insert", function(req, res) {
   console.log("\n-------------------\nSE PRENDIÓ");
   console.log("Va a insertar a la base de datos el query ", req.body);
-  mu.collections.insert(req.params.dbName, req.params.colName, req.body).then(
-    res.render("success", {
-      title: "MongoDB Explorer",
-      dbName: req.params.dbName,
-      colName: req.params.colName,
-      record: req.body
-    })
-  );
+  mu.collections
+    .insert(req.params.dbName, req.params.colName, req.body)
+    .then(res.redirect("//database/:dbName/collection/:colName/"));
 });
 
 // For debbuging pourposes
