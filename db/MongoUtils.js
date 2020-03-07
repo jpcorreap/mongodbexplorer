@@ -30,17 +30,6 @@ function MongoUtils() {
         .finally(() => client.close())
     );
 
-  // Get statistics of specific database
-  mu.databases.info = dbName =>
-    mu.connect().then(client =>
-      client
-        .db(dbName)
-        .runCommand({
-          dbStats: 1
-        })
-        .finally(() => client.close())
-    );
-
   // ----------------------
   // Collections operations
   // ----------------------
@@ -57,6 +46,16 @@ function MongoUtils() {
         .finally(() => client.close())
     );
 
+  // Get statistics of specific database
+  mu.collections.info = (dbName, colName) =>
+    mu.connect().then(client =>
+      client
+        .db(dbName)
+        .collection(colName)
+        .stats()
+        .finally(() => client.close())
+    );
+
   // Get 20 last documents of an specific collection's database
   mu.collections.findLast20 = (dbName, colName) =>
     mu.connect().then(client =>
@@ -69,7 +68,8 @@ function MongoUtils() {
         .toArray()
         .finally(() => client.close())
     );
-
+  // https://docs.mongodb.com/manual/reference/method/db.collection.count/
+  // https://docs.mongodb.com/manual/reference/method/db.collection.storageSize/
   return mu;
 }
 

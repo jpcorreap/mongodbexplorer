@@ -30,14 +30,29 @@ router.get("/database/:dbName", function(req, res) {
 
 /* GET registers of a specific collection of a specific database. */
 router.get("/database/:dbName/collection/:colName", function(req, res) {
-  mu.collections.findLast20(req.params.dbName, req.params.colName).then(col => {
+  mu.collections.info(req.params.dbName, req.params.colName).then(col => {
     console.log("GET COL OBJECTS: Llegaron las colecciones ", col);
-    res.redirect("/");
-    /*res.render("display_records", {
+    res.render("col_selected", {
       title: "MongoDB Explorer",
       dbName: req.params.dbName,
-      collections: col
-    });*/
+      colName: req.params.colName,
+      info: col
+    });
+  });
+});
+
+router.get("/database/:dbName/collection/:colName/records", function(req, res) {
+  mu.collections.findLast20(req.params.dbName, req.params.colName).then(col => {
+    console.log("\n-----------\nIMPORTANTE\nLlegaron las colecciones ", col);
+    res.json(col);
+  });
+});
+
+// For debbuging pourposes
+router.get("/testinfo/:dbName/:colName", function(req, res) {
+  mu.collections.info(req.params.dbName, req.params.colName).then(col => {
+    console.log("Llegaron las colecciones ", col);
+    res.send(col);
   });
 });
 

@@ -1,8 +1,7 @@
 <%- include("./head") %>
 
-<h6>Database name: <%= dbName %></h6>
-<h6>Size</h6>
-<h6>There you are <%=dbName%>&#39;s collections:</h5>
+<h6>Database <%= dbName %></h6>
+<h6>Now, please select one of <%=dbName%>&#39;s collections:</h5>
 
 <select name="collections" id="collectionSelection">
   <% collections.forEach( (item) => { %>
@@ -11,6 +10,6 @@
   <!-- Object.keys()  -->
 </select>
 
-<script src="/javascripts/fetch.js"></script>
+<script src="/javascripts/main.js"></script>
 
 <%- include("./closure") %>

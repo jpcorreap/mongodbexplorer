@@ -1,0 +1,24 @@
+<%- include("./head") %>
+
+<p id="colNameMachete" style="visibility: hidden;"><%=colName%></p>
+
+<h4>Database: <%=dbName%></h4>
+<h4>Collection: <%=colName%></h4>
+<h4>Here you are latest 20 records:</h4>
+<div class="container">
+  <table class="table table-bordered" id="records" style="visibility: hidden;">
+    <thead
+      class="thead-dark"
+      id="recordsTableHead"
+      style="text-align: center;"
+    ></thead>
+    <tbody id="recordsTableBody"></tbody>
+  </table>
+</div>
+
+<script src="/javascripts/fetch.js"></script>
+<script>
+  viewRecords();
+</script>
+
+<%- include("./closure") %>

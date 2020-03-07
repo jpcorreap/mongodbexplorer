@@ -7,3 +7,10 @@ function showCollections() {
   //console.log("La base de datos ", dbName, " pesa ", dbSize);
   window.location.replace("/database/" + dbName);
 }
+
+function showRecords() {
+  const colName = document.getElementById("collectionSelection").value;
+  console.log("Seleccionó la collection " + "'" + colName + "'");
+
+  window.location.replace(window.location.pathname + "/collection/" + colName);
+}
